@@ -1,9 +1,11 @@
 import { Negociacao } from "../models/negociacao.js";
+import { Negociacoes } from "../models/negociacoes.js";
 
 export class NegociacaoController {
     private _data: HTMLInputElement;
     private _quantidade: HTMLInputElement;
     private _valor: HTMLInputElement;
+    private negociacoes = new Negociacoes();
 
     constructor() {
         this._data = document.querySelector("#data");
@@ -13,13 +15,15 @@ export class NegociacaoController {
 
     adiciona(): void {
         const negociacao = this.criaNegociacao();
-        console.log(negociacao);
+        this.negociacoes.adiciona(negociacao);
+        console.log(this.negociacoes.lista());
         this.limparFormulario();
     }
 
     criaNegociacao(): Negociacao {
-        const expressao = /-/g; // Expressão regular que verifica se tem '-'
-        const data = new Date(this._data.value.replace(expressao, ','));
+        const partesData = this._data.value.split("-");
+        const data = new Date(parseInt(partesData[0]), parseInt(partesData[1]) - 1, parseInt(partesData[2]));
+        data.toLocaleDateString('pt-BR');
         const quantidade = parseInt(this._quantidade.value);
         const valor = parseFloat(this._valor.value);
 
