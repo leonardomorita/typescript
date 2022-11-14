@@ -1,6 +1,6 @@
 export class Negociacoes {
     constructor() {
-        this.negociacoes = [];
+        this.negociacoes = []; // == private negociacoes: Array<Negociacao> = [];
     }
     adiciona(negociacao) {
         this.negociacoes.push(negociacao);
